@@ -53,29 +53,54 @@ public class Expedia extends Helper {
 	WebElement goodTitle;
 
 	public void setElementText(WebElement element, String text) {
-		try {
-			waitUntilElementIsLoaded(element);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		element.click();
-		element.clear();
+		waitUntilElementIsLoaded(element);
 		element.sendKeys(text);
 	}
-	
+
+	public void setWindowsSize(int x, int y) {
+		Dimension newSize = new Dimension(x, y);
+		// Resize current window to the set dimension
+		driver.manage().window().setSize(newSize);
+	}
+
 	public void waitForElement(WebElement element) {
-		try {
-			waitUntilElementIsLoaded(element);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    }
+		waitUntilElementIsLoaded(element);
+	}
+
+	public void sendKeysText(String text) {
+		// Set focus on field.
+		flightReturningDate.click();
+		// Select or text on filed.
+		flightReturningDate.sendKeys(Keys.CONTROL + "a");
+		// We need return Control key.
+		flightReturningDate.sendKeys(Keys.CONTROL + "");
+		// Write date in field.
+		flightReturningDate.sendKeys(text);
+	}
+
+	public void setDepartureAirport(String airportName) {
+		setElementText(setElementText, airportName);
+	}
+
+	public void setArrivalAirport(String airportName) {
+		setElementText(flyingToField, airportName);
+	}
+
+	public void setDepartureDate(String departureDate) {
+		waitForElement(flightDepartingDate);
+		// Write date in field.
+		flightDepartingDate.sendKeys(departureDate);
+	}
+
+	public void setArrivalDate(String arrivalDate) {
+		waitForElement(expedia.flightReturningDate);
+		// Write date in field.
+		sendKeysText(arrivalDate);
+	}
+
+	/*
+	 * List<WebElement> elementList = driver .findElements(By.
+	 * cssSelector(".odd td:nth-child(2) a, .even td:nth-child(2) a"));
+	 * Assert.assertTrue(sort(elementList, sortButton));
+	 */
 }
