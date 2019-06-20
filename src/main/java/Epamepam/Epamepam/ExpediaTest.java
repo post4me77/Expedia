@@ -13,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import io.github.bonigarcia.wdm.ChromeDriverManager
 
 public class ExpediaTest {
 	static WebDriver driver;
@@ -30,7 +31,7 @@ public class ExpediaTest {
 
 	@Before
 	public void setUp() throws IOException, InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "D:\\ChromeDriver\\chromedriver_win32\\chromedriver1.exe");
+		ChromeDriverManager.getInstance().setup();
 		driver = new ChromeDriver();
 		expedia = new Expedia(driver);
 		String BASEURL = "http://www.expedia.com";
