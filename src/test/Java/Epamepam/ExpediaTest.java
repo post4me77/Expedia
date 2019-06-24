@@ -6,7 +6,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -15,6 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 
 public class ExpediaTest {
+	WebDriver driver;
 	Expedia expedia;
 	String BASEURL = "http://www.expedia.com";
 	String FIRST_PRICE_ITEM = "$131";
@@ -22,7 +22,7 @@ public class ExpediaTest {
 	String DEPARTING_DATE = "12/01/2019";
 	String RETURNING_DATE = "12/07/2019";
 	String DEPARTURE_CITY = "London";
-	STRING ARRIVAL_CITY = "Dublin";
+	String ARRIVAL_CITY = "Dublin";
 	String URL_LONDON_DUBLIN = "https://www.expedia.com/Flights-Search?flight-type=on&starDate=12%2F01%2F2019&endDate="
 			+ "12%2F07%2F2019&mode=search&trip=roundtrip&leg1=from%3ALondon%2C+England%2C+UK+%28"
 			+ "LHR-Heathrow%29%2Cto%3ADublin%2C+Ireland+%28DUB%29%2Cdeparture%3A12%2F01%2F2019TANYT&leg2="
@@ -34,7 +34,8 @@ public class ExpediaTest {
 	public void setUp() throws IOException, InterruptedException {
 		ChromeDriverManager.getInstance().setup();
 		// driver = new ChromeDriver();
-		WebDriver driver = DriverFactory.getInstance().getDriver();
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Boris\\Downloads\\chromedriver\\chromedriver.exe");
+		driver = DriverFactory.getInstance().getDriver();
 		expedia = new Expedia(driver);
 		expedia.setWindowsSize(1200, 780);
 		driver.navigate().to(BASEURL);
@@ -52,9 +53,10 @@ public class ExpediaTest {
 		// Set from country field.
 		expedia.setDepartureAirport(DEPARTURE_CITY);
 		// Select Heathrow airport in popup.
+		expedia.waitForElement(expedia.heathrowAirportTitle);
 		expedia.heathrowAirportTitle.click();
 		// Set to country field.
-		expedia.setArriveAirport(ARRIVAL_CITY);
+		expedia.setArrivalAirport(ARRIVAL_CITY);
 		expedia.waitForElement(expedia.dublinwAirportTitle);
 		// Select "Dublin Airport (DUB), Ireland" in popup.
 		expedia.dublinwAirportTitle.click();
@@ -64,6 +66,10 @@ public class ExpediaTest {
 
 		expedia.waitForElement(expedia.plusAdultButton);
 		expedia.plusAdultButton.click();
+		
+		expedia.setDepartureDate(DEPARTING_DATE);
+		
+		expedia.setArrivalDate(RETURNING_DATE);
 
 		expedia.waitForElement(expedia.submitButton);
 		expedia.submitButton.click();

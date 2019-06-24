@@ -3,9 +3,11 @@ package Epamepam.Epamepam;
 import java.io.IOException;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.Keys;
 
 import Epamepam.Epamepam.Helper;
 
@@ -52,18 +54,18 @@ public class Expedia extends Helper {
 	@FindBy(xpath = "//*[@class='good']")
 	WebElement goodTitle;
 
-	public void setElementText(WebElement element, String text) {
+	public void setElementText(WebElement element, String text) throws IOException, InterruptedException {
 		waitUntilElementIsLoaded(element);
 		element.sendKeys(text);
 	}
 
 	public void setWindowsSize(int x, int y) {
-		Dimension newSize = new Dimension(x, y);
+		Dimension newSize = new Dimension(x, y);	
 		// Resize current window to the set dimension
 		driver.manage().window().setSize(newSize);
 	}
 
-	public void waitForElement(WebElement element) {
+	public void waitForElement(WebElement element) throws IOException, InterruptedException{
 		waitUntilElementIsLoaded(element);
 	}
 
@@ -78,22 +80,24 @@ public class Expedia extends Helper {
 		flightReturningDate.sendKeys(text);
 	}
 
-	public void setDepartureAirport(String airportName) {
-		setElementText(setElementText, airportName);
+	public void setDepartureAirport(String airportName) throws IOException, InterruptedException {
+		waitForElement(flyingFromField);
+		flyingFromField.sendKeys(airportName);
 	}
 
-	public void setArrivalAirport(String airportName) {
-		setElementText(flyingToField, airportName);
+	public void setArrivalAirport(String airportName) throws IOException, InterruptedException {
+		waitForElement(flyingFromField);
+		flyingToField.sendKeys(airportName);
 	}
 
-	public void setDepartureDate(String departureDate) {
+	public void setDepartureDate(String departureDate) throws IOException, InterruptedException {
 		waitForElement(flightDepartingDate);
 		// Write date in field.
 		flightDepartingDate.sendKeys(departureDate);
 	}
 
-	public void setArrivalDate(String arrivalDate) {
-		waitForElement(expedia.flightReturningDate);
+	public void setArrivalDate(String arrivalDate) throws IOException, InterruptedException {
+		waitForElement(flightReturningDate);
 		// Write date in field.
 		sendKeysText(arrivalDate);
 	}

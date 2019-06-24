@@ -35,7 +35,7 @@ public abstract class Helper {
 		new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(element));
 	}
 
-	public boolean sort(List<WebElement> elementList, sortButton) throws IOException, InterruptedException {
+	/*public boolean sort(List<WebElement> elementList, sortButton) throws IOException, InterruptedException {
 		sortButton.click();
 		ArrayList<String> obtainedList = new ArrayList<String>();
 		waitUntilElementIsLoaded(elementList.get(0));
@@ -48,5 +48,5 @@ public abstract class Helper {
 		}
 		Collections.sort(sortedList);
 		return  sortedList.equals(obtainedList);
-	}
+	}*/
 }
