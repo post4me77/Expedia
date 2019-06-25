@@ -12,6 +12,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import static io.github.bonigarcia.wdm.DriverManagerType.CHROME;
 
 public class ExpediaTest {
 	WebDriver driver;
@@ -32,9 +34,8 @@ public class ExpediaTest {
 
 	@Before
 	public void setUp() throws IOException, InterruptedException {
-		ChromeDriverManager.getInstance().setup();
-		// driver = new ChromeDriver();
-		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Boris\\Downloads\\chromedriver\\chromedriver.exe");
+		WebDriverManager.chromedriver().version("74.0.3729.6").setup();
+//		WebDriver driver = new ChromeDriver();
 		driver = DriverFactory.getInstance().getDriver();
 		expedia = new Expedia(driver);
 		expedia.setWindowsSize(1200, 780);

@@ -60,33 +60,24 @@ public class Expedia extends Helper {
 	}
 
 	public void setWindowsSize(int x, int y) {
-		Dimension newSize = new Dimension(x, y);	
+		Dimension newSize = new Dimension(x, y);
 		// Resize current window to the set dimension
 		driver.manage().window().setSize(newSize);
 	}
 
-	public void waitForElement(WebElement element) throws IOException, InterruptedException{
+	public void waitForElement(WebElement element) throws IOException, InterruptedException {
 		waitUntilElementIsLoaded(element);
-	}
-
-	public void sendKeysText(String text) {
-		// Set focus on field.
-		flightReturningDate.click();
-		// Select or text on filed.
-		flightReturningDate.sendKeys(Keys.CONTROL + "a");
-		// We need return Control key.
-		flightReturningDate.sendKeys(Keys.CONTROL + "");
-		// Write date in field.
-		flightReturningDate.sendKeys(text);
 	}
 
 	public void setDepartureAirport(String airportName) throws IOException, InterruptedException {
 		waitForElement(flyingFromField);
+		flyingFromField.click();
 		flyingFromField.sendKeys(airportName);
 	}
 
 	public void setArrivalAirport(String airportName) throws IOException, InterruptedException {
-		waitForElement(flyingFromField);
+		waitForElement(flyingToField);
+		flyingToField.click();
 		flyingToField.sendKeys(airportName);
 	}
 
@@ -98,8 +89,15 @@ public class Expedia extends Helper {
 
 	public void setArrivalDate(String arrivalDate) throws IOException, InterruptedException {
 		waitForElement(flightReturningDate);
-		// Write date in field.
-		sendKeysText(arrivalDate);
+		// Set focus on field.
+		flightReturningDate.click();
+		flightReturningDate.clear();
+		// Select or text on filed.
+		flightReturningDate.sendKeys(Keys.chord(Keys.CONTROL,"a"), "arrivalDate");
+//		// Write date in field.
+//		flightReturningDate.sendKeys(arrivalDate);
+//		flightReturningDate.sendKeys(Keys.chord(Keys.CONTROL,"a"));
+//		flightReturningDate.sendKeys(arrivalDate);
 	}
 
 	/*
