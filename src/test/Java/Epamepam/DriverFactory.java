@@ -3,34 +3,21 @@ package Epamepam.Epamepam;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class DriverFactory {
+	private WebDriver driver;
 
-	private DriverFactory() {
-		// Do-nothing..Do not allow to initialize this class from outside
+	DriverFactory() {
+		WebDriverManager.chromedriver().version("74.0.3729.6").setup();
+		driver = new ChromeDriver();
 	}
 
-	private static DriverFactory instance = new DriverFactory();
-
-	public static DriverFactory getInstance() {
-		return instance;
+	public WebDriver getDriver() {
+		return driver;
 	}
 
-	ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>() // thread local driver object for webdriver
-	{
-		@Override
-		protected WebDriver initialValue() {
-			return new ChromeDriver(); // can be replaced with other browser drivers
-		}
-	};
-
-	public WebDriver getDriver() // call this method to get the driver object and launch the browser
-	{
-		return driver.get();
-	}
-
-	public void removeDriver() // Quits the driver and closes the browser
-	{
-		driver.get().quit();
-		driver.remove();
+	public void QuitDriver() {
+		driver.quit();
 	}
 }

@@ -6,17 +6,9 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import static io.github.bonigarcia.wdm.DriverManagerType.CHROME;
 
 public class ExpediaTest {
-	WebDriver driver;
+	DriverFactory objDriver = new DriverFactory();
 	Expedia expedia;
 	String BASEURL = "http://www.expedia.com";
 	String FIRST_PRICE_ITEM = "$131";
@@ -34,18 +26,15 @@ public class ExpediaTest {
 
 	@Before
 	public void setUp() throws IOException, InterruptedException {
-		WebDriverManager.chromedriver().version("74.0.3729.6").setup();
-//		WebDriver driver = new ChromeDriver();
-		driver = DriverFactory.getInstance().getDriver();
-		expedia = new Expedia(driver);
+		expedia = new Expedia(objDriver.getDriver());
 		expedia.setWindowsSize(1200, 780);
-		driver.navigate().to(BASEURL);
+		objDriver.getDriver().navigate().to(BASEURL);
 		expedia.waitForElement(expedia.flightButton);
 	}
 
 	@After
-	public void tearDown() throws Exception {
-		DriverFactory.getInstance().removeDriver();
+	public void tearDown() {
+		objDriver.QuitDriver();
 	}
 
 	@Test
@@ -67,9 +56,9 @@ public class ExpediaTest {
 
 		expedia.waitForElement(expedia.plusAdultButton);
 		expedia.plusAdultButton.click();
-		
+
 		expedia.setDepartureDate(DEPARTING_DATE);
-		
+
 		expedia.setArrivalDate(RETURNING_DATE);
 
 		expedia.waitForElement(expedia.submitButton);
@@ -78,7 +67,7 @@ public class ExpediaTest {
 		// This only appears after the progress bar has 100%
 		expedia.waitForElement(expedia.goodTitle);
 		// We need to check that have correct entered data.
-		Assert.assertEquals(driver.getCurrentUrl(), URL_LONDON_DUBLIN);
+		Assert.assertEquals(objDriver.getDriver().getCurrentUrl(), URL_LONDON_DUBLIN);
 		expedia.waitForElement(expedia.firstPriceTitle);
 		// Assert that the price in first row is €122.98 (or any other price at your
 		// time).

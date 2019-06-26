@@ -4,10 +4,10 @@ import java.io.IOException;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.Keys;
 
 import Epamepam.Epamepam.Helper;
 
@@ -91,18 +91,7 @@ public class Expedia extends Helper {
 		waitForElement(flightReturningDate);
 		// Set focus on field.
 		flightReturningDate.click();
-		flightReturningDate.clear();
 		// Select or text on filed.
-		flightReturningDate.sendKeys(Keys.chord(Keys.CONTROL,"a"), "arrivalDate");
-//		// Write date in field.
-//		flightReturningDate.sendKeys(arrivalDate);
-//		flightReturningDate.sendKeys(Keys.chord(Keys.CONTROL,"a"));
-//		flightReturningDate.sendKeys(arrivalDate);
+		flightReturningDate.sendKeys(Keys.chord(Keys.CONTROL, "a"), arrivalDate);
 	}
-
-	/*
-	 * List<WebElement> elementList = driver .findElements(By.
-	 * cssSelector(".odd td:nth-child(2) a, .even td:nth-child(2) a"));
-	 * Assert.assertTrue(sort(elementList, sortButton));
-	 */
 }
