@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -15,12 +16,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 /**
  * Abstract class.
  */
-public abstract class Helper {
+public abstract class BasePageObject {
 	protected static WebDriver driver;
 
-	public Helper(WebDriver driver) {
+	public BasePageObject(WebDriver driver) {
 		super();
-		Helper.driver = driver;
+		BasePageObject.driver = driver;
 	}
 
 	public boolean exists(WebElement element) {
@@ -33,5 +34,11 @@ public abstract class Helper {
 
 	public static void waitUntilElementIsLoaded(WebElement element) throws IOException, InterruptedException {
 		new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(element));
+	}
+
+	public void setWindowsSize(int x, int y) {
+		Dimension newSize = new Dimension(x, y);
+		// Resize current window to the set dimension
+		driver.manage().window().setSize(newSize);
 	}
 }

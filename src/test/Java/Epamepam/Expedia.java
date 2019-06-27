@@ -3,15 +3,15 @@ package Epamepam.Epamepam;
 import java.io.IOException;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import Epamepam.Epamepam.Helper;
+import Epamepam.Epamepam.BasePageObject;
 
-public class Expedia extends Helper {
+public class Expedia extends BasePageObject {
 
 	public Expedia(WebDriver driver) {
 		super(driver);
@@ -24,14 +24,8 @@ public class Expedia extends Helper {
 	@FindBy(xpath = "//*[@id='flight-origin-hp-flight']")
 	WebElement flyingFromField;
 
-	@FindBy(xpath = "//*[@id=\"aria-option-1\"]/div/span[2]")
-	WebElement heathrowAirportTitle;
-
 	@FindBy(xpath = "//*[@id=\"flight-destination-hp-flight\"]")
 	WebElement flyingToField;
-
-	@FindBy(xpath = "//*[@id=\"aria-option-0\"]/span[2]/div")
-	WebElement dublinwAirportTitle;
 
 	@FindBy(css = ".gcw-submit")
 	WebElement submitButton;
@@ -58,37 +52,40 @@ public class Expedia extends Helper {
 		waitUntilElementIsLoaded(element);
 		element.sendKeys(text);
 	}
-
-	public void setWindowsSize(int x, int y) {
-		Dimension newSize = new Dimension(x, y);
-		// Resize current window to the set dimension
-		driver.manage().window().setSize(newSize);
+	
+	public void windowsSizeSet(int x, int y) {
+		windowsSizeSet(x, y);
 	}
 
 	public void waitForElement(WebElement element) throws IOException, InterruptedException {
 		waitUntilElementIsLoaded(element);
 	}
 
-	public void setDepartureAirport(String airportName) throws IOException, InterruptedException {
-		waitForElement(flyingFromField);
+	public void setDepartureAirport(String DEPARTURE_CITY, String airportName) {
 		flyingFromField.click();
-		flyingFromField.sendKeys(airportName);
-	}
+		flyingFromField.sendKeys(DEPARTURE_CITY);
+		WebElement departureAirportName = driver
+				.findElement((By.xpath("//*[contains(text(), \"" + airportName + "\")]")));
+		departureAirportName.click();
 
-	public void setArrivalAirport(String airportName) throws IOException, InterruptedException {
-		waitForElement(flyingToField);
+	}
+	
+	public void setArrivalAirport(String ARRIVAL_CITY, String airportName) {
 		flyingToField.click();
-		flyingToField.sendKeys(airportName);
+		flyingToField.sendKeys(ARRIVAL_CITY);
+		WebElement airportNameButton = driver
+				.findElement((By.xpath("//*[contains(text(), \"" + airportName + "\")]")));
+		airportNameButton.click();
 	}
 
 	public void setDepartureDate(String departureDate) throws IOException, InterruptedException {
-		waitForElement(flightDepartingDate);
+		// waitForElement(flightDepartingDate);
 		// Write date in field.
 		flightDepartingDate.sendKeys(departureDate);
 	}
 
 	public void setArrivalDate(String arrivalDate) throws IOException, InterruptedException {
-		waitForElement(flightReturningDate);
+		// waitForElement(flightReturningDate);
 		// Set focus on field.
 		flightReturningDate.click();
 		// Select or text on filed.

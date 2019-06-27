@@ -29,7 +29,6 @@ public class ExpediaTest {
 		expedia = new Expedia(objDriver.getDriver());
 		expedia.setWindowsSize(1200, 780);
 		objDriver.getDriver().navigate().to(BASEURL);
-		expedia.waitForElement(expedia.flightButton);
 	}
 
 	@After
@@ -40,35 +39,21 @@ public class ExpediaTest {
 	@Test
 	public void mySimpleEqualsTest() throws InterruptedException, IOException {
 		expedia.flightButton.click();
-		// Set from country field.
-		expedia.setDepartureAirport(DEPARTURE_CITY);
-		// Select Heathrow airport in popup.
-		expedia.waitForElement(expedia.heathrowAirportTitle);
-		expedia.heathrowAirportTitle.click();
-		// Set to country field.
-		expedia.setArrivalAirport(ARRIVAL_CITY);
-		expedia.waitForElement(expedia.dublinwAirportTitle);
-		// Select "Dublin Airport (DUB), Ireland" in popup.
-		expedia.dublinwAirportTitle.click();
-
-		expedia.waitForElement(expedia.travelerSelectorButton);
+		// Set LHR -London Heathrow airport.
+		expedia.setDepartureAirport(DEPARTURE_CITY, "LHR");
+		// Set "Dublin Airport (DUB) in Ireland.
+		expedia.setArrivalAirport(ARRIVAL_CITY, "DUB");
 		expedia.travelerSelectorButton.click();
-
-		expedia.waitForElement(expedia.plusAdultButton);
 		expedia.plusAdultButton.click();
-
 		expedia.setDepartureDate(DEPARTING_DATE);
-
 		expedia.setArrivalDate(RETURNING_DATE);
-
-		expedia.waitForElement(expedia.submitButton);
 		expedia.submitButton.click();
 
 		// This only appears after the progress bar has 100%
 		expedia.waitForElement(expedia.goodTitle);
 		// We need to check that have correct entered data.
 		Assert.assertEquals(objDriver.getDriver().getCurrentUrl(), URL_LONDON_DUBLIN);
-		expedia.waitForElement(expedia.firstPriceTitle);
+		//expedia.waitForElement(expedia.firstPriceTitle);
 		// Assert that the price in first row is €122.98 (or any other price at your
 		// time).
 		Assert.assertEquals(expedia.firstPriceTitle.getText(), FIRST_PRICE_ITEM);
