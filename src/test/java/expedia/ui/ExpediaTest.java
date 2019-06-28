@@ -1,4 +1,4 @@
-package Epamepam.Epamepam;
+package com.expedia.ui;
 
 import java.io.IOException;
 
@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.expedia.DriverFactory;
 
 public class ExpediaTest {
 	DriverFactory objDriver = new DriverFactory();
@@ -33,7 +35,7 @@ public class ExpediaTest {
 
 	@After
 	public void tearDown() {
-		objDriver.QuitDriver();
+		objDriver.quitDriver();
 	}
 
 	@Test
@@ -53,7 +55,7 @@ public class ExpediaTest {
 		expedia.waitForElement(expedia.goodTitle);
 		// We need to check that have correct entered data.
 		Assert.assertEquals(objDriver.getDriver().getCurrentUrl(), URL_LONDON_DUBLIN);
-		//expedia.waitForElement(expedia.firstPriceTitle);
+		// expedia.waitForElement(expedia.firstPriceTitle);
 		// Assert that the price in first row is €122.98 (or any other price at your
 		// time).
 		Assert.assertEquals(expedia.firstPriceTitle.getText(), FIRST_PRICE_ITEM);
