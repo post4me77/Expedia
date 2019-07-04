@@ -52,10 +52,6 @@ public class Expedia extends BasePageObject {
 		waitUntilElementIsLoaded(element);
 		element.sendKeys(text);
 	}
-	
-	public void windowsSizeSet(int x, int y) {
-		windowsSizeSet(x, y);
-	}
 
 	public void waitForElement(WebElement element) throws IOException, InterruptedException {
 		waitUntilElementIsLoaded(element);

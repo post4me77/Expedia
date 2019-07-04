@@ -8,9 +8,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.expedia.DriverFactory;
+import com.expedia.ReadPropertyFile;
 
 public class ExpediaTest {
 	DriverFactory objDriver = new DriverFactory();
+	ReadPropertyFile readPropertyFile= new ReadPropertyFile();
 	Expedia expedia;
 	String BASEURL = "http://www.expedia.com";
 	String FIRST_PRICE_ITEM = "$131";
@@ -29,7 +31,7 @@ public class ExpediaTest {
 	@Before
 	public void setUp() throws IOException, InterruptedException {
 		expedia = new Expedia(objDriver.getDriver());
-		expedia.setWindowsSize(1200, 780);
+		expedia.setWindowsSize(ReadPropertyFile.getVallueWithComma("size").get(0), ReadPropertyFile.getVallueWithComma("size").get(1));
 		objDriver.getDriver().navigate().to(BASEURL);
 	}
 
